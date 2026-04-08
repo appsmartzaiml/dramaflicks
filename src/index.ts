@@ -110,7 +110,7 @@ app.use(express.json());
 app.get("/", (_req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.json({
-        status: "Radio FM MCP Server is running",
+        status: "Dramaflicks MCP Server is running",
         version: "1.0.1",
         protocol: "MCP",
     });
@@ -119,7 +119,7 @@ app.get("/", (_req, res) => {
 app.get("/mcp", (_req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.json({
-        message: "Radio FM MCP endpoint – use POST with ChatGPT MCP protocol."
+        message: "Dramaflicks MCP endpoint – use POST with ChatGPT MCP protocol."
     });
 });
 
@@ -136,13 +136,13 @@ app.get("/mcp.json", (_req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.json({
         schema_version: "v1",
-        name: "RadioFM",
+        name: "Dramaflicks",
         version: "1.0.1",
         description:
             "Radio FM brings the world’s radio stations and podcasts directly into ChatGPT. Explore live broadcasts from over 200 countries — search by station name, city, country, language, or genre, and instantly discover music, news, talk, and sports channels that suit your mood. Whether you want trending hits, sports or regional talk shows, or local community radio, ChatGPT can use Radio FM to find and play them in real time. No authentication or setup is required — just search and start listening.",
         api: {
             type: "mcp",
-            url: "https://dramaflicks-mcp-flame.vercel.app/mcp",
+            url: "https://dramaflicks.vercel.app/mcp",
         },
         auth: "none",
         capabilities: {
