@@ -11,7 +11,7 @@
     "capabilities": {
         "tools": [
             {
-                "name": "search_radio_stations",
+                "name": "search_dramas",
                 "description": "Search and discover live radio stations and podcasts from across the world by entering a station name, location, country, language, or genre. ChatGPT connects with the Radio FM database to instantly return matching stations you can explore or play — from local favorites to trending global broadcasts.",
                 "inputSchema": {
                     "type": "object",
@@ -42,17 +42,17 @@
     ],
     "author": {
         "name": "Radio FM",
-        "website": "https://appradiofm.com/terms-of-use",
-        "email": "support@appradiofm.com"
+        "website": "https://dramasstory.com/terms-of-use",
+        "email": "support@dramasstory.com"
     },
     "icon": {
         "url": "https://dramaflicks-mcp-flame.vercel.app/UpdatedRFMIcon.png",
         "background": "#111827"
     },
     "legal": {
-        "privacy_policy_url": "https://appradiofm.com/privacy-policy",
-        "terms_of_service_url": "https://appradiofm.com/terms-of-use"
+        "privacy_policy_url": "https://dramasstory.com/privacy-policy",
+        "terms_of_service_url": "https://dramasstory.com/terms-of-use"
     },
-    "homepage": "https://appradiofm.com/",
+    "homepage": "https://dramasstory.com/",
     "license": "MIT"
 }

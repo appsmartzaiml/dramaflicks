@@ -82,7 +82,7 @@ function formatRadioStation(station: RadioStation, index: number): string {
     lines.push(
         `Stream: ${station.stream_type} ${station.stream_bitrate}kbps`,
         `Plays: ${parseInt(station.st_play_cnt).toLocaleString()}`,
-        `Listen: https://appradiofm.com/radioplay/${station.st_shorturl}`
+        `Listen: https://dramasstory.com/radioplay/${station.st_shorturl}`
     );
 
     return lines.join("\n");
@@ -183,7 +183,7 @@ app.get("/mcp.json", (_req, res) => {
         capabilities: {
             tools: [
                 {
-                    name: "search_radio_stations",
+                    name: "search_dramas",
                     description:
                         "Search and discover live radio stations, podcasts, and dramas from across the world by entering a station name, location, country, language, genre, or drama title. ChatGPT connects with the Radio FM database to instantly return matching stations, podcasts, and dramas you can explore or play — from local favorites to trending global broadcasts and gripping audio stories.",
                     inputSchema: {
@@ -206,21 +206,21 @@ app.get("/mcp.json", (_req, res) => {
                 },
             ],
         },
-        categories: ["radio", "news", "media", "entertainment", "music"],
+        categories: ["drama", "thriller", "media", "entertainment", "music"],
         author: {
-            name: "Radio FM",
-            website: "https://appradiofm.com/terms-of-use",
-            email: "support@appradiofm.com",
+            name: "Dramaflicks",
+            website: "https://dramasstory.com/terms-of-use",
+            email: "support@dramasstory.com",
         },
         icon: {
             url: "https://dramaflicks-mcp-flame.vercel.app/UpdatedRFMIcon.png",
             background: "#111827",
         },
         legal: {
-            privacy_policy_url: "https://appradiofm.com/privacy-policy",
-            terms_of_service_url: "https://appradiofm.com/terms-of-use",
+            privacy_policy_url: "https://dramasstory.com/privacy-policy",
+            terms_of_service_url: "https://dramasstory.com/terms-of-use",
         },
-        homepage: "https://appradiofm.com/",
+        homepage: "https://dramasstory.com/",
         license: "MIT",
     });
 });
@@ -241,7 +241,7 @@ app.post("/mcp", async (req, res) => {
                 result: {
                     protocolVersion: "2024-11-05",
                     capabilities: { tools: {} },
-                    serverInfo: { name: "radiofm-mcp-server", version: "1.0.1" },
+                    serverInfo: { name: "dramaflicks-mcp", version: "1.0.1" },
                 },
             });
         }
@@ -254,7 +254,7 @@ app.post("/mcp", async (req, res) => {
                 result: {
                     tools: [
                         {
-                            name: "search_radio_stations",
+                            name: "search_dramas",
                             description:
                                 "Search and explore live radio stations, podcasts, and dramas from around the world using the Radio FM app within ChatGPT. Discover trending music, news, cultural broadcasts, and gripping audio dramas across languages, genres, and countries — all seamlessly accessible without sign-in.",
                             inputSchema: {
@@ -282,7 +282,7 @@ app.post("/mcp", async (req, res) => {
         // Tool call
         if (method === "tools/call") {
             const { name, arguments: args } = params;
-            if (name !== "search_radio_stations")
+            if (name !== "search_dramas")
                 throw new Error(`Unknown tool: ${name}`);
 
             const query = args?.query as string;
@@ -339,7 +339,7 @@ app.post("/mcp", async (req, res) => {
                 );
             }
 
-            sections.push("\nTap on any 'Listen' link to play on RadioFM.");
+            sections.push("\nTap on any 'Listen' link to play on Dramaflicks.");
             return res.json({
                 jsonrpc: "2.0",
                 id,
@@ -362,7 +362,7 @@ app.post("/mcp", async (req, res) => {
 
 // Start server
 app.listen(port, () => {
-    console.log(`✅ Radio FM MCP Server running on http://localhost:${port}`);
+    console.log(`✅ Dramaflicks MCP Server running on http://localhost:${port}`);
     console.log(`📡 MCP descriptor: /mcp.json`);
 });
 
