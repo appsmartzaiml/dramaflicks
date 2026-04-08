@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 
-const RADIOFM_API_BASE = "https://dramasstory.com/mcp_api/";
+const RADIOFM_API_BASE = "https://dramasstory.com/drama/";
 const port = process.env.PORT || 3000;
 
 // Interfaces
@@ -41,6 +41,20 @@ interface Podcast {
     cc_code: string;
 }
 
+interface Drama {
+    id: string;
+    drama_name: string;
+    d_keywords: string;
+    total_episodes: string;
+    d_desc: string;
+    slug: string;
+    image_url: string;
+    gradient: string;
+    unlock_epi_count: string;
+    status: string;
+    added_dt: string;
+}
+
 interface ApiResponse {
     http_response_code: number;
     http_response_message: string;
@@ -49,7 +63,7 @@ interface ApiResponse {
         ErrorMessage: string;
         Data: Array<{
             type: string;
-            data: RadioStation[] | Podcast[];
+            data: RadioStation[] | Podcast[] | Drama[];
         }>;
     };
 }
@@ -98,6 +112,27 @@ function formatPodcast(podcast: Podcast, index: number): string {
     return lines.join("\n");
 }
 
+// Format drama details
+function formatDrama(drama: Drama, index: number): string {
+    const lines = [
+        `${index}. ${drama.drama_name}`,
+        `Episodes: ${drama.total_episodes}`,
+        `Keywords: ${drama.d_keywords}`,
+    ];
+
+    if (drama.d_desc) {
+        const shortDesc =
+            drama.d_desc.length > 100
+                ? drama.d_desc.substring(0, 100) + "..."
+                : drama.d_desc;
+        lines.push(`Description: ${shortDesc}`);
+    }
+
+    lines.push(`Image: ${drama.image_url}`);
+
+    return lines.join("\n");
+}
+
 // Express setup
 const app = express();
 app.use(cors());
@@ -139,7 +174,7 @@ app.get("/mcp.json", (_req, res) => {
         name: "Dramaflicks",
         version: "1.0.1",
         description:
-            "Radio FM brings the world’s radio stations and podcasts directly into ChatGPT. Explore live broadcasts from over 200 countries — search by station name, city, country, language, or genre, and instantly discover music, news, talk, and sports channels that suit your mood. Whether you want trending hits, sports or regional talk shows, or local community radio, ChatGPT can use Radio FM to find and play them in real time. No authentication or setup is required — just search and start listening.",
+            "Radio FM brings the world’s radio stations, podcasts, and dramas directly into ChatGPT. Explore live broadcasts from over 200 countries and discover gripping dramas — search by station name, city, country, language, genre, or drama title, and instantly discover music, news, talk, sports channels, and thrilling audio stories that suit your mood. Whether you want trending hits, sports or regional talk shows, local community radio, or immersive dramas, ChatGPT can use Radio FM to find and play them in real time. No authentication or setup is required — just search and start listening.",
         api: {
             type: "mcp",
             url: "https://dramaflicks.vercel.app/mcp",
@@ -150,7 +185,7 @@ app.get("/mcp.json", (_req, res) => {
                 {
                     name: "search_radio_stations",
                     description:
-                        "Search and discover live radio stations and podcasts from across the world by entering a station name, location, country, language, or genre. ChatGPT connects with the Radio FM database to instantly return matching stations you can explore or play — from local favorites to trending global broadcasts.",
+                        "Search and discover live radio stations, podcasts, and dramas from across the world by entering a station name, location, country, language, genre, or drama title. ChatGPT connects with the Radio FM database to instantly return matching stations, podcasts, and dramas you can explore or play — from local favorites to trending global broadcasts and gripping audio stories.",
                     inputSchema: {
                         type: "object",
                         properties: {
@@ -221,7 +256,7 @@ app.post("/mcp", async (req, res) => {
                         {
                             name: "search_radio_stations",
                             description:
-                                "Search and explore live radio stations and podcasts from around the world using the Radio FM app within ChatGPT. Discover trending music, news, and cultural broadcasts across languages, genres, and countries — all seamlessly accessible without sign-in.",
+                                "Search and explore live radio stations, podcasts, and dramas from around the world using the Radio FM app within ChatGPT. Discover trending music, news, cultural broadcasts, and gripping audio dramas across languages, genres, and countries — all seamlessly accessible without sign-in.",
                             inputSchema: {
                                 type: "object",
                                 properties: {
@@ -292,6 +327,15 @@ app.post("/mcp", async (req, res) => {
                 sections.push(
                     `\nPODCASTS (${podcasts.length})`,
                     ...podcasts.map((podcast, i) => formatPodcast(podcast, i + 1))
+                );
+            }
+
+            const dramaData = results.find((r) => r.type === "dramas");
+            if (dramaData && dramaData.data.length > 0) {
+                const dramas = dramaData.data as unknown as Drama[];
+                sections.push(
+                    `\nDRAMAS (${dramas.length})`,
+                    ...dramas.map((drama, i) => formatDrama(drama, i + 1))
                 );
             }
 
