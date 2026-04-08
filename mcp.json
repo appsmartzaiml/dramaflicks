@@ -1,0 +1,58 @@
+{
+    "schema_version": "v1",
+    "name": "RadioFM",
+    "version": "1.0.1",
+    "description": "Radio FM brings the world’s radio stations and podcasts directly into ChatGPT. Explore live broadcasts from over 200 countries — search by station name, city, country, language, or genre, and instantly discover music, news, talk, and sports channels that suit your mood. Whether you want trending hits, sports or regional talk shows, or local community radio, ChatGPT can use Radio FM to find and play them in real time. No authentication or setup is required — just search and start listening.",
+    "api": {
+        "type": "mcp",
+        "url": "https://dramaflicks-mcp-flame.vercel.app/mcp"
+    },
+    "auth": "none",
+    "capabilities": {
+        "tools": [
+            {
+                "name": "search_radio_stations",
+                "description": "Search and discover live radio stations and podcasts from across the world by entering a station name, location, country, language, or genre. ChatGPT connects with the Radio FM database to instantly return matching stations you can explore or play — from local favorites to trending global broadcasts.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "Search query (e.g., 'BBC', 'India', 'Hindi', 'Jazz')"
+                        }
+                    },
+                    "required": [
+                        "query"
+                    ]
+                },
+                "annotations": {
+                    "readOnlyHint": true,
+                    "openWorldHint": true,
+                    "destructiveHint": false
+                }
+            }
+        ]
+    },
+    "categories": [
+        "radio",
+        "news",
+        "media",
+        "entertainment",
+        "music"
+    ],
+    "author": {
+        "name": "Radio FM",
+        "website": "https://appradiofm.com/terms-of-use",
+        "email": "support@appradiofm.com"
+    },
+    "icon": {
+        "url": "https://dramaflicks-mcp-flame.vercel.app/UpdatedRFMIcon.png",
+        "background": "#111827"
+    },
+    "legal": {
+        "privacy_policy_url": "https://appradiofm.com/privacy-policy",
+        "terms_of_service_url": "https://appradiofm.com/terms-of-use"
+    },
+    "homepage": "https://appradiofm.com/",
+    "license": "MIT"
+}
