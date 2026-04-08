@@ -45,7 +45,7 @@ function formatDrama(drama, index) {
             : drama.d_desc;
         lines.push(`Description: ${shortDesc}`);
     }
-    lines.push(`Image: ${drama.image_url}`);
+    lines.push(`Image: ${drama.image_url}`, `Listen: https://dramasstory.com/drama/${drama.slug}-${drama.id}?episode=0`);
     return lines.join("\n");
 }
 // Express setup

@@ -128,7 +128,10 @@ function formatDrama(drama: Drama, index: number): string {
         lines.push(`Description: ${shortDesc}`);
     }
 
-    lines.push(`Image: ${drama.image_url}`);
+    lines.push(
+        `Image: ${drama.image_url}`,
+        `Listen: https://dramasstory.com/drama/${drama.slug}-${drama.id}?episode=0`
+    );
 
     return lines.join("\n");
 }
